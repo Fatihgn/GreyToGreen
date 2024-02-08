@@ -55,7 +55,7 @@ class EventItem extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             Text(
-              '${event.startEventDate} - ${event.endEventDate} | ${event.startEventTime} - ${event.endEventTime}',
+              '${event.eventDate} | ${event.eventTime}',
               style: Theme.of(context).textTheme.labelSmall?.copyWith(
                     color: Colors.black,
                     fontWeight: FontWeight.w300,

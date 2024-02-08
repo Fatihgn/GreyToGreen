@@ -12,43 +12,71 @@ class TimeTextField extends StatefulWidget {
 }
 
 class _TimeTextFieldState extends State<TimeTextField> {
-  TimeOfDay? selectedTime;
+  TimeOfDay? selectedStartTime;
+  TimeOfDay? selectedEndTime;
 
   void timeSelector() async {
     final now = TimeOfDay.now();
-    final time = await showTimePicker(context: context, initialTime: now);
+    final startTime = await showTimePicker(context: context, initialTime: now);
 
-    if (time == null) {
+    if (startTime == null) {
       return;
     }
 
     setState(() {
-      selectedTime = time;
-      widget.timeController.text = selectedTime!.format(context);
+      selectedStartTime = startTime;
+    });
+
+    final endTime =
+        await showTimePicker(context: context, initialTime: startTime);
+
+    if (endTime == null) {
+      return;
+    }
+
+    if (endTime.hour < startTime.hour ||
+        (endTime.hour == startTime.hour && endTime.minute < startTime.minute)) {
+      // Handle invalid end time selection:
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('End time must be after start time.'),
+        ),
+      );
+      return;
+    }
+
+    setState(() {
+      selectedEndTime = endTime;
+      widget.timeController.text =
+          '${selectedStartTime!.format(context)} - ${selectedEndTime!.format(context)}';
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      controller: widget.timeController,
-      showCursor: false,
-      enableInteractiveSelection: false,
-      onTap: timeSelector,
-      keyboardType: TextInputType.none,
-      decoration: InputDecoration(
-        filled: true,
-        fillColor: Colors.white,
-        focusedBorder: const OutlineInputBorder(
-          borderRadius: BorderRadius.all(
-            Radius.circular(12),
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 15),
+      child: TextField(
+        controller: widget.timeController,
+        showCursor: false,
+        enableInteractiveSelection: false,
+        onTap: timeSelector,
+        keyboardType: TextInputType.none,
+        decoration: InputDecoration(
+          filled: true,
+          fillColor: Colors.white,
+          focusedBorder: const OutlineInputBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(12),
+            ),
           ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          label:
+              Text(widget.text, style: Theme.of(context).textTheme.labelLarge),
+          suffixIcon: const Icon(Icons.access_time_filled_sharp),
         ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
-        label: Text(widget.text, style: Theme.of(context).textTheme.labelLarge),
-        suffixIcon: const Icon(Icons.access_time_filled_sharp),
       ),
     );
   }
