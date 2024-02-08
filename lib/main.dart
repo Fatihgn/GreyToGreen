@@ -19,7 +19,7 @@ class MyApp extends StatefulWidget {
 
 List<Widget> screens = [
   const Home(),
-  const CurrentEvents(),
+  const Categories(),
   const PlanEvent(),
   const Map(),
   const Profile()
