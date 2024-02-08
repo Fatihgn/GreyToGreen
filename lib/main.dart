@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:grey_to_green/screens/current_events_screen.dart';
 import 'package:grey_to_green/screens/planning_event.dart';
 import 'package:grey_to_green/screens/home_screen.dart';
 import 'package:grey_to_green/screens/map_screen.dart';
 import 'package:grey_to_green/screens/profile_screen.dart';
-import 'package:grey_to_green/screens/categories_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,7 +19,7 @@ class MyApp extends StatefulWidget {
 
 List<Widget> screens = [
   const Home(),
-  const Categories(),
+  const CurrentEvents(),
   const PlanEvent(),
   const Map(),
   const Profile()
@@ -30,6 +30,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         textTheme: GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme),
         scaffoldBackgroundColor: const Color.fromRGBO(245, 247, 246, 1),
