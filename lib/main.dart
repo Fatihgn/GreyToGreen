@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:grey_to_green/screens/login.dart';
 import 'package:grey_to_green/screens/planning_event.dart';
 import 'package:grey_to_green/screens/home_screen.dart';
 import 'package:grey_to_green/screens/map_screen.dart';
 import 'package:grey_to_green/screens/profile_screen.dart';
 import 'package:grey_to_green/screens/categories_screen.dart';
+import 'package:grey_to_green/screens/register.dart';
 
 void main() {
   runApp(const MyApp());
