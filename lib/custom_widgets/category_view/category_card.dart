@@ -9,9 +9,10 @@ class CategoryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      margin: const EdgeInsets.all(8),
       color: Colors.white,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(60),
+        borderRadius: BorderRadius.circular(30),
         side: const BorderSide(
           color: Color.fromRGBO(183, 183, 183, 1),
         ),

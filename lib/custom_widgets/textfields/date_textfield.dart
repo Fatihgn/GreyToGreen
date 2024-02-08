@@ -13,15 +13,16 @@ class DateTextField extends StatefulWidget {
 }
 
 class _DateTextFieldState extends State<DateTextField> {
-  DateTime? selectedDate;
+  DateTimeRange? selectedDate;
 
   void dateSelector() async {
     final now = DateTime.now();
-    final firstDate = now;
-    final lastDate = DateTime(now.year, now.month + 1, now.day);
 
-    final date = await showDatePicker(
-        context: context, firstDate: firstDate, lastDate: lastDate);
+    final date = await showDateRangePicker(
+      context: context,
+      firstDate: DateTime.now(),
+      lastDate: DateTime(now.year, now.month + 1, now.day),
+    );
 
     if (date == null) {
       return;
@@ -29,31 +30,36 @@ class _DateTextFieldState extends State<DateTextField> {
 
     setState(() {
       selectedDate = date;
-      widget.dateController.text = DateFormat.yMd().format(selectedDate!);
+      widget.dateController.text =
+          '${DateFormat.yMMMd().format(selectedDate!.start)} - ${DateFormat.yMMMd().format(selectedDate!.end)}';
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      showCursor: false,
-      enableInteractiveSelection: false,
-      controller: widget.dateController,
-      onTap: dateSelector,
-      keyboardType: TextInputType.none,
-      decoration: InputDecoration(
-        filled: true,
-        fillColor: Colors.white,
-        focusedBorder: const OutlineInputBorder(
-          borderRadius: BorderRadius.all(
-            Radius.circular(12),
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 15),
+      child: TextField(
+        showCursor: false,
+        enableInteractiveSelection: false,
+        controller: widget.dateController,
+        onTap: dateSelector,
+        keyboardType: TextInputType.none,
+        decoration: InputDecoration(
+          filled: true,
+          fillColor: Colors.white,
+          focusedBorder: const OutlineInputBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(12),
+            ),
           ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          label:
+              Text(widget.text, style: Theme.of(context).textTheme.labelLarge),
+          suffixIcon: const Icon(Icons.calendar_month),
         ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
-        label: Text(widget.text, style: Theme.of(context).textTheme.labelLarge),
-        suffixIcon: const Icon(Icons.calendar_month),
       ),
     );
   }
