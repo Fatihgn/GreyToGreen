@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:grey_to_green/product/init/application_initialize.dart';
+import 'package:grey_to_green/product/init/theme/custom_color_scheme.dart';
+import 'package:grey_to_green/product/init/theme/custom_light_theme.dart';
 import 'package:grey_to_green/screens/planning_event.dart';
 import 'package:grey_to_green/screens/home_screen.dart';
 import 'package:grey_to_green/screens/map_screen.dart';
 import 'package:grey_to_green/screens/profile_screen.dart';
 import 'package:grey_to_green/screens/categories_screen.dart';
 
-void main() {
+Future<void> main() async {
+  await ApplicationInitiliaze().make();
   runApp(const MyApp());
 }
 
@@ -22,18 +26,21 @@ List<Widget> screens = [
   const Categories(),
   const PlanEvent(),
   const Map(),
-  const Profile()
+  const Profile(),
 ];
-var selectedIndex = 0;
+int selectedIndex = 0;
 
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
+      theme: CustomLightTheme().themeData,
+      darkTheme: ThemeData(
+        useMaterial3: true,
+        colorScheme: CustomColorScheme.darkColorScheme,
         textTheme: GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme),
-        scaffoldBackgroundColor: const Color.fromRGBO(245, 247, 246, 1),
+        scaffoldBackgroundColor: const Color.fromRGBO(26, 28, 24, 1),
       ),
       home: Scaffold(
         appBar: AppBar(

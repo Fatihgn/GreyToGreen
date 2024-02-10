@@ -7,9 +7,9 @@ import 'package:flutter/services.dart';
 
 /// This class initializes the application process
 final class ApplicationInitiliaze {
-  const ApplicationInitiliaze._();
-
+  /// This method initializes the application process
   Future<void> make() async {
+    WidgetsFlutterBinding.ensureInitialized();
     await runZonedGuarded<Future<void>>(
       _initialize,
       (error, stack) {},
@@ -18,7 +18,6 @@ final class ApplicationInitiliaze {
 
   /// This method initializes the application process
   Future<void> _initialize() async {
-    WidgetsFlutterBinding.ensureInitialized();
     await SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp],
     );
