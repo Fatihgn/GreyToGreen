@@ -18,10 +18,8 @@ class _PlanEventState extends State<PlanEvent> {
   final titleController = TextEditingController();
   final aboutController = TextEditingController();
   final locationController = TextEditingController();
-  final startDateController = TextEditingController();
-  final endDateController = TextEditingController();
-  final startTimeController = TextEditingController();
-  final endTimeController = TextEditingController();
+  final dateController = TextEditingController();
+  final timeController = TextEditingController();
   final participantController = TextEditingController();
 
   var category = categories[0];
@@ -31,10 +29,8 @@ class _PlanEventState extends State<PlanEvent> {
     titleController.dispose();
     aboutController.dispose();
     locationController.dispose();
-    startDateController.dispose();
-    endDateController.dispose();
-    startTimeController.dispose();
-    endTimeController.dispose();
+    dateController.dispose();
+    timeController.dispose();
     participantController.dispose();
     super.dispose();
   }
@@ -45,10 +41,8 @@ class _PlanEventState extends State<PlanEvent> {
     if (titleController.text.trim().isEmpty ||
         aboutController.text.trim().isEmpty ||
         locationController.text.trim().isEmpty ||
-        startDateController.text.isEmpty ||
-        endDateController.text.trim().isEmpty ||
-        startTimeController.text.trim().isEmpty ||
-        endTimeController.text.trim().isEmpty ||
+        dateController.text.isEmpty ||
+        timeController.text.trim().isEmpty ||
         maxParticipant! <= 0 ||
         participantController.text.isEmpty ||
         _selectedEventImage == null) {
@@ -75,10 +69,8 @@ class _PlanEventState extends State<PlanEvent> {
         Event(
           title: titleController.text,
           location: locationController.text,
-          startEventDate: startDateController.text,
-          endEventDate: endDateController.text,
-          startEventTime: startTimeController.text,
-          endEventTime: endTimeController.text,
+          eventDate: dateController.text,
+          eventTime: timeController.text,
           about: aboutController.text,
           eventImage: _selectedEventImage!,
           maxParticipant: int.parse(participantController.text),
@@ -110,72 +102,38 @@ class _PlanEventState extends State<PlanEvent> {
       padding: const EdgeInsets.all(25),
       child: SingleChildScrollView(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             CustomTextField(
               text: 'Title',
-              maxlength: 50,
               icon: const Icon(Icons.title_outlined),
               keyboard: TextInputType.text,
               textController: titleController,
             ),
             CustomTextField(
               text: 'About',
-              maxlength: 100,
               icon: const Icon(Icons.question_mark_outlined),
               keyboard: TextInputType.text,
               textController: aboutController,
             ),
             CustomTextField(
               text: 'Location',
-              maxlength: 20,
               icon: const Icon(Icons.location_on),
               keyboard: TextInputType.text,
               textController: locationController,
             ),
-            Row(
-              children: [
-                Expanded(
-                  child: DateTextField(
-                    text: 'Start Event Date',
-                    dateController: startDateController,
-                  ),
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                Expanded(
-                  child: DateTextField(
-                    text: 'End Event Date',
-                    dateController: endDateController,
-                  ),
-                ),
-              ],
+            DateTextField(
+              text: 'Event Date',
+              dateController: dateController,
             ),
             const SizedBox(
-              height: 20,
+              width: 10,
             ),
-            Row(
-              children: [
-                Expanded(
-                  child: TimeTextField(
-                    text: 'Start Event Time',
-                    timeController: startTimeController,
-                  ),
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                Expanded(
-                  child: TimeTextField(
-                    text: 'End Event Time',
-                    timeController: endTimeController,
-                  ),
-                ),
-              ],
+            TimeTextField(
+              text: 'Event Time',
+              timeController: timeController,
             ),
             const SizedBox(
-              height: 20,
+              width: 10,
             ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -184,7 +142,6 @@ class _PlanEventState extends State<PlanEvent> {
                   child: CustomTextField(
                     text: 'Max Participant',
                     icon: const Icon(Icons.people_alt),
-                    maxlength: 5,
                     keyboard: TextInputType.number,
                     textController: participantController,
                   ),
@@ -229,44 +186,51 @@ class _PlanEventState extends State<PlanEvent> {
                   ),
               ],
             ),
-            DropdownButton(
-              value: category,
-              dropdownColor: const Color.fromARGB(255, 250, 243, 243),
-              style: const TextStyle(color: Colors.black),
-              alignment: Alignment.center,
-              icon: const Icon(Icons.arrow_drop_down_outlined),
-              items: [
-                for (var item in categories)
-                  DropdownMenuItem(
-                    value: item,
-                    child: Text(
-                      item,
-                      overflow: TextOverflow.ellipsis,
+            Container(
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(12),
+                  border:
+                      Border.all(color: const Color.fromARGB(255, 70, 70, 70))),
+              child: DropdownButton(
+                underline: Container(),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 7, horizontal: 10),
+                isExpanded: true,
+                value: category,
+                items: [
+                  for (var item in categories)
+                    DropdownMenuItem(
+                      value: item,
+                      child: Text(item),
                     ),
-                  ),
-              ],
-              onChanged: (newValue) {
-                if (newValue == null) {
-                  return;
-                }
-                setState(() {
-                  category = newValue;
-                });
-              },
+                ],
+                onChanged: (value) {
+                  if (value == null) {
+                    return;
+                  }
+                  setState(() {
+                    category = value;
+                  });
+                },
+              ),
+            ),
+            const SizedBox(
+              height: 25,
             ),
             SizedBox(
               width: double.infinity,
               child: OutlinedButton(
                 onPressed: planEvent,
                 style: OutlinedButton.styleFrom(
-                  backgroundColor: Colors.white,
+                  backgroundColor: Colors.green.shade400,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(40),
                   ),
                 ),
                 child: Text(
-                  'PLAN EVENT',
-                  style: Theme.of(context).textTheme.labelLarge,
+                  'Plan Event',
+                  style: Theme.of(context).textTheme.headlineSmall,
                 ),
               ),
             ),

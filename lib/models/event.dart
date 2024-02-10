@@ -22,10 +22,8 @@ class Event {
   Event({
     required this.title,
     required this.location,
-    required this.startEventDate,
-    required this.endEventDate,
-    required this.startEventTime,
-    required this.endEventTime,
+    required this.eventDate,
+    required this.eventTime,
     required this.about,
     required this.eventImage,
     required this.maxParticipant,
@@ -33,10 +31,8 @@ class Event {
 
   final String title;
   final String location;
-  final String startEventDate;
-  final String endEventDate;
-  final String startEventTime;
-  final String endEventTime;
+  final String eventDate;
+  final String eventTime;
   final String about;
   final XFile eventImage;
   final int maxParticipant;
