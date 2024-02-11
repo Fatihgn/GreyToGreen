@@ -6,7 +6,9 @@ import 'package:image_picker/image_picker.dart';
 import 'package:grey_to_green/models/event.dart';
 import 'package:grey_to_green/models/data/events.dart';
 
+/// Plan Event Screen
 class PlanEvent extends StatefulWidget {
+  /// Constructor
   const PlanEvent({super.key});
 
   @override
@@ -22,7 +24,7 @@ class _PlanEventState extends State<PlanEvent> {
   final timeController = TextEditingController();
   final participantController = TextEditingController();
 
-  var category = categories[0];
+  String category = categories[0];
 
   @override
   void dispose() {
@@ -79,7 +81,7 @@ class _PlanEventState extends State<PlanEvent> {
     });
   }
 
-  void _eventImageFunc() async {
+  Future<void> _eventImageFunc() async {
     final image = await ImagePicker().pickImage(source: ImageSource.gallery);
 
     if (image == null) {
@@ -160,7 +162,9 @@ class _PlanEventState extends State<PlanEvent> {
                     onPressed: _eventImageFunc,
                     label: Padding(
                       padding: const EdgeInsets.symmetric(
-                          vertical: 23, horizontal: 7),
+                        vertical: 23,
+                        horizontal: 7,
+                      ),
                       child: Text(
                         'Event Image',
                         style: Theme.of(context).textTheme.labelLarge,
@@ -176,7 +180,7 @@ class _PlanEventState extends State<PlanEvent> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(left: 16),
-                        child: Text(_selectedEventImage!.name.toString()),
+                        child: Text(_selectedEventImage!.name),
                       ),
                       IconButton(
                         onPressed: _canceImage,
@@ -188,10 +192,11 @@ class _PlanEventState extends State<PlanEvent> {
             ),
             Container(
               decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(12),
-                  border:
-                      Border.all(color: const Color.fromARGB(255, 70, 70, 70))),
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12),
+                border:
+                    Border.all(color: const Color.fromARGB(255, 70, 70, 70)),
+              ),
               child: DropdownButton(
                 underline: Container(),
                 padding:
@@ -199,7 +204,7 @@ class _PlanEventState extends State<PlanEvent> {
                 isExpanded: true,
                 value: category,
                 items: [
-                  for (var item in categories)
+                  for (final item in categories)
                     DropdownMenuItem(
                       value: item,
                       child: Text(item),

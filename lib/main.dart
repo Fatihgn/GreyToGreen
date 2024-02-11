@@ -3,18 +3,20 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:grey_to_green/product/init/application_initialize.dart';
 import 'package:grey_to_green/product/init/theme/custom_color_scheme.dart';
 import 'package:grey_to_green/product/init/theme/custom_light_theme.dart';
-import 'package:grey_to_green/screens/planning_event.dart';
+import 'package:grey_to_green/screens/categories_screen.dart';
 import 'package:grey_to_green/screens/home_screen.dart';
 import 'package:grey_to_green/screens/map_screen.dart';
+import 'package:grey_to_green/screens/planning_event.dart';
 import 'package:grey_to_green/screens/profile_screen.dart';
-import 'package:grey_to_green/screens/categories_screen.dart';
 
 Future<void> main() async {
   await ApplicationInitiliaze().make();
   runApp(const MyApp());
 }
 
+/// MyApp is the root widget of the application
 class MyApp extends StatefulWidget {
+  /// constructor for MyApp
   const MyApp({super.key});
 
   @override

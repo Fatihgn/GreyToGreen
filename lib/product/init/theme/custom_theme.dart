@@ -7,4 +7,5 @@ abstract class CustomTheme {
 
   /// custom Scaffold background color
   Color get scaffoldBackground;
+  TextTheme get textTheme;
 }
