@@ -1,7 +1,8 @@
-part of '../../screens/categories_screen.dart';
+import 'package:flutter/material.dart';
+import 'package:grey_to_green/models/event.dart';
 
-class _CategoryCard extends StatelessWidget {
-  const _CategoryCard(this.categoryItem, {super.key});
+class CategoryCard extends StatelessWidget {
+  const CategoryCard(this.categoryItem, {super.key});
 
   final String categoryItem;
 

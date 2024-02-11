@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:grey_to_green/custom_widgets/category_view/category_card.dart';
+import 'package:grey_to_green/feature/category/widgets/category_card.dart';
 import 'package:grey_to_green/models/event.dart';
 
 class Categories extends StatefulWidget {

@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:grey_to_green/feature/map/screen/map_screen.dart';
-import 'package:grey_to_green/product/init/application_initialize.dart';
-import 'package:grey_to_green/product/init/theme/custom_color_scheme.dart';
-import 'package:grey_to_green/product/init/theme/custom_light_theme.dart';
-import 'package:grey_to_green/feature/category/screen/event_category_screen.dart';
-import 'package:grey_to_green/feature/home/screen/home_screen.dart';
 import 'package:grey_to_green/feature/add_event/screen/planning_event_screen.dart';
+import 'package:grey_to_green/feature/home/screen/home_screen.dart';
+import 'package:grey_to_green/feature/map/screen/map_screen.dart';
 import 'package:grey_to_green/feature/profile/screen/profile_screen.dart';
+import 'package:grey_to_green/product/init/application_initialize.dart';
+import 'package:grey_to_green/product/init/theme/custom_dark_theme.dart';
+import 'package:grey_to_green/product/init/theme/custom_light_theme.dart';
+import 'package:grey_to_green/screens/categories_screen.dart';
 
 Future<void> main() async {
   await ApplicationInitiliaze().make();
+
   runApp(const MyApp());
 }
 
@@ -25,7 +25,7 @@ class MyApp extends StatefulWidget {
 
 List<Widget> screens = [
   const HomeScreen(),
-  const EventCategoryScreen(),
+  const Categories(),
   const PlanEventScreen(),
   const MapScreen(),
   const ProfileScreen(),
@@ -38,12 +38,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: CustomLightTheme().themeData,
-      darkTheme: ThemeData(
-        useMaterial3: true,
-        colorScheme: CustomColorScheme.darkColorScheme,
-        textTheme: GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme),
-        scaffoldBackgroundColor: const Color.fromRGBO(26, 28, 24, 1),
-      ),
+      darkTheme: CustomDarkTheme().themeData,
       home: Scaffold(
         appBar: AppBar(
           title: Text(

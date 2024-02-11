@@ -1,17 +1,16 @@
-import 'package:auto_route/auto_route.dart';
+import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
+import 'package:gen/index.dart';
 
 @RoutePage()
-class HomeScreen extends StatefulWidget {
+
+/// Home screen
+class HomeScreen extends StatelessWidget {
+  /// Home screen
   const HomeScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  @override
   Widget build(BuildContext context) {
-    return const Text('Home');
+    return Image(image: Assets.images.applogo.image().image);
   }
 }
