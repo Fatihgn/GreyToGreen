@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:grey_to_green/product/init/theme/custom_color_scheme.dart';
 import 'package:grey_to_green/product/init/theme/custom_theme.dart';
 
@@ -14,4 +15,7 @@ final class CustomLightTheme implements CustomTheme {
 
   @override
   final Color scaffoldBackground = const Color.fromRGBO(245, 247, 246, 1);
+
+  @override
+  final TextTheme textTheme = GoogleFonts.poppinsTextTheme();
 }

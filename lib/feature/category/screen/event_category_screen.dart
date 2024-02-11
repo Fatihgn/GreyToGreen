@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:grey_to_green/custom_widgets/category_view/category_card.dart';
 import 'package:grey_to_green/models/event.dart';
 
-part '../custom_widgets/category_view/category_card.dart';
-
-/// Categories
 class Categories extends StatefulWidget {
-  /// Categories
   const Categories({super.key});
 
   @override
@@ -20,7 +17,7 @@ class _CategoriesState extends State<Categories> {
       itemCount: categories.length,
       gridDelegate:
           const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-      itemBuilder: (context, index) => _CategoryCard(categories[index]),
+      itemBuilder: (context, index) => CategoryCard(categories[index]),
     );
   }
 }
