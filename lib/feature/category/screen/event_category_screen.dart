@@ -1,15 +1,17 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:grey_to_green/models/event.dart';
-import 'package:grey_to_green/custom_widgets/category_view/category_card.dart';
+import 'package:grey_to_green/feature/category/widgets/category_card.dart';
 
-class Categories extends StatefulWidget {
-  const Categories({super.key});
+@RoutePage()
+class EventCategoryScreen extends StatefulWidget {
+  const EventCategoryScreen({super.key});
 
   @override
-  State<Categories> createState() => _CategoriesState();
+  State<EventCategoryScreen> createState() => _EventCategoryScreenState();
 }
 
-class _CategoriesState extends State<Categories> {
+class _EventCategoryScreenState extends State<EventCategoryScreen> {
   @override
   Widget build(BuildContext context) {
     return GridView.builder(

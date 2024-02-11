@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:grey_to_green/custom_widgets/event_view/event_item.dart';
+import 'package:grey_to_green/feature/events/widgets/event_item.dart';
 import 'package:grey_to_green/models/event.dart';
 
 class EventList extends StatelessWidget {
