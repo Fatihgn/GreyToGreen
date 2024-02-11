@@ -1,8 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:grey_to_green/models/event.dart';
+part of '../../screens/categories_screen.dart';
 
-class CategoryCard extends StatelessWidget {
-  const CategoryCard(this.categoryItem, {super.key});
+class _CategoryCard extends StatelessWidget {
+  const _CategoryCard(this.categoryItem, {super.key});
 
   final String categoryItem;
 
@@ -18,7 +17,6 @@ class CategoryCard extends StatelessWidget {
         ),
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(
