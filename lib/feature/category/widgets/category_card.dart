@@ -18,7 +18,6 @@ class CategoryCard extends StatelessWidget {
         ),
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(

@@ -1,14 +1,16 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:grey_to_green/custom_widgets/textfields/custom_textfield.dart';
+import 'package:grey_to_green/feature/login/widgets/login_register_textfield.dart';
 
-class RegisterPage extends StatefulWidget {
-  const RegisterPage({super.key});
+@RoutePage()
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
 
   @override
-  State<RegisterPage> createState() => _RegisterPageState();
+  State<RegisterScreen> createState() => _RegisterPageState();
 }
 
-class _RegisterPageState extends State<RegisterPage> {
+class _RegisterPageState extends State<RegisterScreen> {
   bool passwordVisible = false;
   String choosegender = 'Male';
 
@@ -40,7 +42,7 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
 
@@ -61,30 +63,33 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 const SizedBox(height: 10),
                 CustomTextFormField(
-                    prefixicon: const Icon(Icons.person_3_outlined),
-                    hintText: "Name: ",
-                    textController: namecontroller),
+                  prefixicon: const Icon(Icons.person_3_outlined),
+                  hintText: 'Name: ',
+                  textController: namecontroller,
+                ),
                 CustomTextFormField(
-                    prefixicon: const Icon(Icons.person_3_outlined),
-                    hintText: "Username: ",
-                    textController: usernamecontroller),
+                  prefixicon: const Icon(Icons.person_3_outlined),
+                  hintText: 'Username: ',
+                  textController: usernamecontroller,
+                ),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Expanded(
                       child: CustomTextFormField(
-                          prefixicon: const Icon(Icons.work_rounded),
-                          hintText: "Age: ",
-                          textController: agecontroller),
+                        prefixicon: const Icon(Icons.work_rounded),
+                        hintText: 'Age: ',
+                        textController: agecontroller,
+                      ),
                     ),
                     const SizedBox(width: 25),
                     Expanded(
                       child: Container(
                         margin: const EdgeInsets.only(bottom: 15),
                         decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black),
-                          borderRadius: BorderRadius.circular(12.0),
+                          border: Border.all(),
+                          borderRadius: BorderRadius.circular(12),
                           color: const Color.fromARGB(255, 250, 243, 243),
                         ),
                         child: Center(
@@ -92,7 +97,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             value: choosegender,
                             icon: const Icon(Icons.arrow_drop_down_outlined),
                             items: [
-                              for (var item in gender)
+                              for (final item in gender)
                                 DropdownMenuItem(
                                   value: item,
                                   child: Text(
@@ -115,17 +120,20 @@ class _RegisterPageState extends State<RegisterPage> {
                   ],
                 ),
                 CustomTextFormField(
-                    prefixicon: const Icon(Icons.mail_outline_outlined),
-                    hintText: "Emails: ",
-                    textController: emailcontroller),
+                  prefixicon: const Icon(Icons.mail_outline_outlined),
+                  hintText: 'Emails: ',
+                  textController: emailcontroller,
+                ),
                 CustomTextFormField(
-                    prefixicon: const Icon(Icons.lock),
-                    hintText: "Password: ",
-                    textController: passwordcontroller),
+                  prefixicon: const Icon(Icons.lock),
+                  hintText: 'Password: ',
+                  textController: passwordcontroller,
+                ),
                 CustomTextFormField(
-                    prefixicon: const Icon(Icons.lock),
-                    hintText: "Confirm Password:  ",
-                    textController: conpasswordcontroller),
+                  prefixicon: const Icon(Icons.lock),
+                  hintText: 'Confirm Password:  ',
+                  textController: conpasswordcontroller,
+                ),
                 SizedBox(
                   width: double.infinity,
                   child: InkWell(
@@ -137,14 +145,14 @@ class _RegisterPageState extends State<RegisterPage> {
                         gradient: const LinearGradient(
                           colors: [
                             Color.fromARGB(255, 53, 96, 42),
-                            Color.fromARGB(255, 73, 210, 36)
+                            Color.fromARGB(255, 73, 210, 36),
                           ],
                         ),
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Center(
                         child: Text(
-                          "LOGIN",
+                          'LOGIN',
                           textAlign: TextAlign.center,
                           style:
                               Theme.of(context).textTheme.titleLarge!.copyWith(
@@ -163,15 +171,21 @@ class _RegisterPageState extends State<RegisterPage> {
                       foregroundColor: Colors.black,
                       backgroundColor: Colors.white,
                       padding: const EdgeInsets.only(
-                          left: 85, right: 85, top: 10, bottom: 10),
+                        left: 85,
+                        right: 85,
+                        top: 10,
+                        bottom: 10,
+                      ),
                     ),
                     onPressed: () {},
                     icon: const Image(
                       image: AssetImage('assets/images/googleicon.png'),
                       width: 20,
                     ),
-                    label: Text("Sign in with Google",
-                        style: Theme.of(context).textTheme.bodyLarge),
+                    label: Text(
+                      'Sign in with Google',
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
                   ),
                 ),
                 const SizedBox(height: 15),
@@ -184,7 +198,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   ),
                   child: Text(
-                    "Do you have an account? Sign in",
+                    'Do you have an account? Sign in',
                     style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                           fontWeight: FontWeight.bold,
                         ),

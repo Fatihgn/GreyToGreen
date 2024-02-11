@@ -1,21 +1,24 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:grey_to_green/custom_widgets/textfields/date_textfield.dart';
-import 'package:grey_to_green/custom_widgets/textfields/basic_textfield.dart';
-import 'package:grey_to_green/custom_widgets/textfields/time_textfield.dart';
+import 'package:grey_to_green/feature/add_event/widgets/date_textfield.dart';
+import 'package:grey_to_green/feature/add_event/widgets/basic_textfield.dart';
+import 'package:grey_to_green/feature/add_event/widgets/time_textfield.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:grey_to_green/models/event.dart';
 import 'package:grey_to_green/models/data/events.dart';
 
+@RoutePage()
+
 /// Plan Event Screen
-class PlanEvent extends StatefulWidget {
+class PlanEventScreen extends StatefulWidget {
   /// Constructor
-  const PlanEvent({super.key});
+  const PlanEventScreen({super.key});
 
   @override
-  State<PlanEvent> createState() => _PlanEventState();
+  State<PlanEventScreen> createState() => _PlanEventScreenState();
 }
 
-class _PlanEventState extends State<PlanEvent> {
+class _PlanEventScreenState extends State<PlanEventScreen> {
   XFile? _selectedEventImage;
   final titleController = TextEditingController();
   final aboutController = TextEditingController();
