@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:grey_to_green/feature/category/widgets/category_card.dart';
 import 'package:grey_to_green/models/event.dart';
 
-class Categories extends StatefulWidget {
-  const Categories({super.key});
+class EventCategoriesScreen extends StatefulWidget {
+  const EventCategoriesScreen({super.key});
 
   @override
-  State<Categories> createState() => _CategoriesState();
+  State<EventCategoriesScreen> createState() => _EventCategoriesScreenState();
 }
 
-class _CategoriesState extends State<Categories> {
+class _EventCategoriesScreenState extends State<EventCategoriesScreen> {
   @override
   Widget build(BuildContext context) {
     return GridView.builder(

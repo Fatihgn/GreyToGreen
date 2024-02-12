@@ -1,11 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:grey_to_green/feature/add_event/widgets/date_textfield.dart';
 import 'package:grey_to_green/feature/add_event/widgets/basic_textfield.dart';
+import 'package:grey_to_green/feature/add_event/widgets/date_textfield.dart';
 import 'package:grey_to_green/feature/add_event/widgets/time_textfield.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:grey_to_green/models/event.dart';
 import 'package:grey_to_green/models/data/events.dart';
+import 'package:grey_to_green/models/event.dart';
+import 'package:image_picker/image_picker.dart';
 
 @RoutePage()
 
@@ -51,7 +51,7 @@ class _PlanEventScreenState extends State<PlanEventScreen> {
         maxParticipant! <= 0 ||
         participantController.text.isEmpty ||
         _selectedEventImage == null) {
-      showDialog(
+      showDialog<Future<void>>(
         context: context,
         builder: (context) => AlertDialog(
           title: const Text('Missing Information'),
