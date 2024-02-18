@@ -5,7 +5,9 @@ import 'package:grey_to_green/models/data/events.dart';
 
 @RoutePage()
 class EventListScreen extends StatefulWidget {
-  const EventListScreen({super.key});
+  const EventListScreen({required this.categoryName, super.key});
+
+  final String categoryName;
 
   @override
   State<EventListScreen> createState() => _EventListScreenState();
@@ -14,7 +16,7 @@ class EventListScreen extends StatefulWidget {
 class _EventListScreenState extends State<EventListScreen> {
   @override
   Widget build(BuildContext context) {
-    Widget currentEvents = Center(
+    Widget content = Center(
       child: Text(
         'No events yet :(',
         style: Theme.of(context).textTheme.bodyLarge,
@@ -22,12 +24,19 @@ class _EventListScreenState extends State<EventListScreen> {
     );
 
     if (clenaupEvents.isNotEmpty) {
-      currentEvents = Expanded(child: EventList(clenaupEvents));
+      content = Expanded(
+        child: EventList(
+          currentEvents: clenaupEvents,
+          categoryName: widget.categoryName,
+        ),
+      );
     }
 
-    return Padding(
-      padding: const EdgeInsets.only(right: 15, left: 15, top: 10),
-      child: currentEvents,
+    return Scaffold(
+      body: Padding(
+        padding: const EdgeInsets.only(right: 15, left: 15, top: 10),
+        child: content,
+      ),
     );
   }
 }

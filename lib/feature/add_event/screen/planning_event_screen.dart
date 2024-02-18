@@ -1,11 +1,14 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:grey_to_green/feature/add_event/widgets/basic_textfield.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:grey_to_green/feature/add_event/widgets/date_textfield.dart';
+import 'package:grey_to_green/feature/add_event/widgets/basic_textfield.dart';
 import 'package:grey_to_green/feature/add_event/widgets/time_textfield.dart';
-import 'package:grey_to_green/models/data/events.dart';
-import 'package:grey_to_green/models/event.dart';
+import 'package:grey_to_green/models/location.dart';
+import 'package:grey_to_green/feature/home/widgets/colors.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:grey_to_green/models/event.dart';
+import 'package:grey_to_green/models/data/events.dart';
 
 @RoutePage()
 
@@ -29,6 +32,8 @@ class _PlanEventScreenState extends State<PlanEventScreen> {
 
   String category = categories[0];
 
+  var start;
+
   @override
   void dispose() {
     titleController.dispose();
@@ -40,7 +45,7 @@ class _PlanEventScreenState extends State<PlanEventScreen> {
     super.dispose();
   }
 
-  void planEvent() {
+  Future<void> planEvent() async {
     final maxParticipant = double.tryParse(participantController.text);
 
     if (titleController.text.trim().isEmpty ||
@@ -51,7 +56,7 @@ class _PlanEventScreenState extends State<PlanEventScreen> {
         maxParticipant! <= 0 ||
         participantController.text.isEmpty ||
         _selectedEventImage == null) {
-      showDialog<Future<void>>(
+      await showDialog(
         context: context,
         builder: (context) => AlertDialog(
           title: const Text('Missing Information'),
@@ -68,19 +73,26 @@ class _PlanEventScreenState extends State<PlanEventScreen> {
       );
       return;
     }
+    start = await locationFromAddress(locationController.text);
 
     setState(() {
       clenaupEvents.add(
         Event(
           title: titleController.text,
-          location: locationController.text,
+          location: MyLocation(
+            name: locationController.text,
+            latitude: double.tryParse(start[0].latitude.toString())!,
+            longitude: double.tryParse(start[0].longitude.toString())!,
+          ),
           eventDate: dateController.text,
           eventTime: timeController.text,
           about: aboutController.text,
           eventImage: _selectedEventImage!,
           maxParticipant: int.parse(participantController.text),
+          category: category,
         ),
       );
+      print(_selectedEventImage!.path);
     });
   }
 
@@ -103,146 +115,166 @@ class _PlanEventScreenState extends State<PlanEventScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(25),
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            CustomTextField(
-              text: 'Title',
-              icon: const Icon(Icons.title_outlined),
-              keyboard: TextInputType.text,
-              textController: titleController,
-            ),
-            CustomTextField(
-              text: 'About',
-              icon: const Icon(Icons.question_mark_outlined),
-              keyboard: TextInputType.text,
-              textController: aboutController,
-            ),
-            CustomTextField(
-              text: 'Location',
-              icon: const Icon(Icons.location_on),
-              keyboard: TextInputType.text,
-              textController: locationController,
-            ),
-            DateTextField(
-              text: 'Event Date',
-              dateController: dateController,
-            ),
-            const SizedBox(
-              width: 10,
-            ),
-            TimeTextField(
-              text: 'Event Time',
-              timeController: timeController,
-            ),
-            const SizedBox(
-              width: 10,
-            ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: CustomTextField(
-                    text: 'Max Participant',
-                    icon: const Icon(Icons.people_alt),
-                    keyboard: TextInputType.number,
-                    textController: participantController,
-                  ),
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                if (_selectedEventImage == null)
-                  OutlinedButton.icon(
-                    style: OutlinedButton.styleFrom(
-                      backgroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-                    onPressed: _eventImageFunc,
-                    label: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 23,
-                        horizontal: 7,
-                      ),
-                      child: Text(
-                        'Event Image',
-                        style: Theme.of(context).textTheme.labelLarge,
-                      ),
-                    ),
-                    icon: const Icon(
-                      Icons.image,
-                      color: Color.fromARGB(255, 75, 75, 75),
-                    ),
-                  )
-                else
-                  Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 16),
-                        child: Text(_selectedEventImage!.name),
-                      ),
-                      IconButton(
-                        onPressed: _canceImage,
-                        icon: const Icon(Icons.delete_forever_rounded),
-                      ),
-                    ],
-                  ),
-              ],
-            ),
-            Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
-                border:
-                    Border.all(color: const Color.fromARGB(255, 70, 70, 70)),
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: const Color(
+          AppColors.primary,
+        ),
+        title: const Text(
+          'Plan Events',
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.w400,
+          ),
+        ),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(25),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              CustomTextField(
+                text: 'Title',
+                icon: const Icon(Icons.title_outlined),
+                keyboard: TextInputType.text,
+                textController: titleController,
               ),
-              child: DropdownButton(
-                underline: Container(),
-                padding:
-                    const EdgeInsets.symmetric(vertical: 7, horizontal: 10),
-                isExpanded: true,
-                value: category,
-                items: [
-                  for (final item in categories)
-                    DropdownMenuItem(
-                      value: item,
-                      child: Text(item),
+              CustomTextField(
+                text: 'About',
+                icon: const Icon(Icons.question_mark_outlined),
+                keyboard: TextInputType.text,
+                textController: aboutController,
+              ),
+              CustomTextField(
+                text: 'Location',
+                icon: const Icon(Icons.location_on),
+                keyboard: TextInputType.text,
+                textController: locationController,
+              ),
+              DateTextField(
+                text: 'Event Date',
+                dateController: dateController,
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              TimeTextField(
+                text: 'Event Time',
+                timeController: timeController,
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: CustomTextField(
+                      text: 'Max Participant',
+                      icon: const Icon(Icons.people_alt),
+                      keyboard: TextInputType.number,
+                      textController: participantController,
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  if (_selectedEventImage == null)
+                    OutlinedButton.icon(
+                      style: OutlinedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      onPressed: _eventImageFunc,
+                      label: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 23,
+                          horizontal: 7,
+                        ),
+                        child: Text(
+                          'Event Image',
+                          style: Theme.of(context).textTheme.labelLarge,
+                        ),
+                      ),
+                      icon: const Icon(
+                        Icons.image,
+                        color: Color.fromARGB(255, 75, 75, 75),
+                      ),
+                    )
+                  else
+                    Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 16),
+                          child: Text(_selectedEventImage!.name),
+                        ),
+                        IconButton(
+                          onPressed: _canceImage,
+                          icon: const Icon(Icons.delete_forever_rounded),
+                        ),
+                      ],
                     ),
                 ],
-                onChanged: (value) {
-                  if (value == null) {
-                    return;
-                  }
-                  setState(() {
-                    category = value;
-                  });
-                },
               ),
-            ),
-            const SizedBox(
-              height: 25,
-            ),
-            SizedBox(
-              width: double.infinity,
-              child: OutlinedButton(
-                onPressed: planEvent,
-                style: OutlinedButton.styleFrom(
-                  backgroundColor: Colors.green.shade400,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(40),
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(
+                    color: const Color.fromARGB(255, 70, 70, 70),
                   ),
                 ),
-                child: Text(
-                  'Plan Event',
-                  style: Theme.of(context).textTheme.headlineSmall,
+                child: DropdownButton(
+                  underline: Container(),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 7, horizontal: 10),
+                  isExpanded: true,
+                  value: category,
+                  items: [
+                    for (final item in categories)
+                      DropdownMenuItem(
+                        value: item,
+                        child: Text(item),
+                      ),
+                  ],
+                  onChanged: (value) {
+                    if (value == null) {
+                      return;
+                    }
+                    setState(() {
+                      category = value;
+                    });
+                  },
                 ),
               ),
-            ),
-          ],
+              const SizedBox(
+                height: 25,
+              ),
+              SizedBox(
+                width: double.infinity,
+                child: OutlinedButton(
+                  onPressed: planEvent,
+                  style: OutlinedButton.styleFrom(
+                    backgroundColor: const Color(
+                      AppColors.primary,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(40),
+                    ),
+                  ),
+                  child: Text(
+                    'Plan Event',
+                    style: Theme.of(context)
+                        .textTheme
+                        .headlineSmall!
+                        .copyWith(color: Colors.white),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

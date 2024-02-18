@@ -1,5 +1,7 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/material.dart';
 import 'package:grey_to_green/feature/add_event/screen/planning_event_screen.dart';
+import 'package:grey_to_green/feature/category/screen/event_category_screen.dart';
 import 'package:grey_to_green/feature/events/screen/event_list_screen.dart';
 import 'package:grey_to_green/feature/home/screen/home_screen.dart';
 import 'package:grey_to_green/feature/login/screen/login_screen.dart';

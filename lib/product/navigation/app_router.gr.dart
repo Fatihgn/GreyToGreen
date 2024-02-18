@@ -15,10 +15,20 @@ abstract class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
-    EventListRoute.name: (routeData) {
+    EventCategoryRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const EventListScreen(),
+        child: const EventCategoryScreen(),
+      );
+    },
+    EventListRoute.name: (routeData) {
+      final args = routeData.argsAs<EventListRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: EventListScreen(
+          categoryName: args.categoryName,
+          key: args.key,
+        ),
       );
     },
     HomeRoute.name: (routeData) {
@@ -67,17 +77,55 @@ abstract class _$AppRouter extends RootStackRouter {
 }
 
 /// generated route for
-/// [EventListScreen]
-class EventListRoute extends PageRouteInfo<void> {
-  const EventListRoute({List<PageRouteInfo>? children})
+/// [EventCategoryScreen]
+class EventCategoryRoute extends PageRouteInfo<void> {
+  const EventCategoryRoute({List<PageRouteInfo>? children})
       : super(
+          EventCategoryRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'EventCategoryRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [EventListScreen]
+class EventListRoute extends PageRouteInfo<EventListRouteArgs> {
+  EventListRoute({
+    required String categoryName,
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
           EventListRoute.name,
+          args: EventListRouteArgs(
+            categoryName: categoryName,
+            key: key,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'EventListRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<EventListRouteArgs> page =
+      PageInfo<EventListRouteArgs>(name);
+}
+
+class EventListRouteArgs {
+  const EventListRouteArgs({
+    required this.categoryName,
+    this.key,
+  });
+
+  final String categoryName;
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'EventListRouteArgs{categoryName: $categoryName, key: $key}';
+  }
 }
 
 /// generated route for
