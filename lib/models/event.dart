@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:grey_to_green/models/location.dart';
 import 'package:image_picker/image_picker.dart';
 
 final List<String> categories = [
@@ -27,13 +27,15 @@ class Event {
     required this.about,
     required this.eventImage,
     required this.maxParticipant,
+    required this.category,
   });
 
   final String title;
-  final String location;
+  final MyLocation location;
   final String eventDate;
   final String eventTime;
   final String about;
   final XFile eventImage;
   final int maxParticipant;
+  final String category;
 }
