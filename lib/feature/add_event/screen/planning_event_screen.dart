@@ -1,14 +1,14 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
-import 'package:grey_to_green/feature/add_event/widgets/date_textfield.dart';
 import 'package:grey_to_green/feature/add_event/widgets/basic_textfield.dart';
+import 'package:grey_to_green/feature/add_event/widgets/date_textfield.dart';
 import 'package:grey_to_green/feature/add_event/widgets/time_textfield.dart';
-import 'package:grey_to_green/models/location.dart';
 import 'package:grey_to_green/feature/home/widgets/colors.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:grey_to_green/models/event.dart';
 import 'package:grey_to_green/models/data/events.dart';
+import 'package:grey_to_green/models/event.dart';
+import 'package:grey_to_green/models/location.dart';
+import 'package:image_picker/image_picker.dart';
 
 @RoutePage()
 

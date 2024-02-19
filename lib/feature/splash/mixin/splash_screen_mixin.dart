@@ -15,8 +15,8 @@ mixin SplashScreenMixin on State<SplashScreen> {
   /// [state] is the state of the authentication
   void navigateToNextScreen(AuthenticationState state) {
     Future.delayed(const Duration(seconds: 2), () {
-      if (state.status.isUnknow) {
-        context.router.replace(const HomeRoute());
+      if (state.status.isAuthenticated) {
+        context.router.replace(const WrapperRoute());
       } else {
         context.router.replace(const LoginRoute());
       }
