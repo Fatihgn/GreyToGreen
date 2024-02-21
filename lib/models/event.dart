@@ -28,6 +28,8 @@ class Event {
     required this.eventImage,
     required this.maxParticipant,
     required this.category,
+    this.attendedParticipant = 0,
+    this.isAttended = false,
   });
 
   final String title;
@@ -38,4 +40,6 @@ class Event {
   final XFile eventImage;
   final int maxParticipant;
   final String category;
+  int attendedParticipant;
+  bool isAttended;
 }

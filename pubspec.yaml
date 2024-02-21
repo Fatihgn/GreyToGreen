@@ -49,6 +49,7 @@ dependencies:
   flutter_map: ^6.1.0
   latlong2: ^0.9.0
   geocoding: ^2.1.1
+  transparent_image: ^2.0.1
 
 dev_dependencies:
   auto_route_generator: ^7.3.2

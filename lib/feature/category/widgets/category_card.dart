@@ -19,6 +19,14 @@ class _CategoryCardState extends State<CategoryCard> {
       onTap: () {
         setState(() {
           showModalBottomSheet(
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(40),
+                topRight: Radius.circular(40),
+              ),
+            ),
+            clipBehavior: Clip.hardEdge,
+            useSafeArea: true,
             context: context,
             builder: (context) =>
                 EventListScreen(categoryName: widget.categoryItem),

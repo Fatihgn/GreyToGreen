@@ -1,4 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:grey_to_green/models/data/events.dart';
+import 'package:grey_to_green/models/event.dart';
 import 'package:grey_to_green/feature/profile/widgets/container_in_profile.dart';
 
 class Grid extends StatefulWidget {
@@ -9,100 +13,11 @@ class Grid extends StatefulWidget {
 }
 
 class _GridState extends State<Grid> {
-  final List<Map<String, dynamic>> gridMap = [
-    {
-      'title': 'aaaaaaaa',
-      'price': '2',
-      'images':
-          'https://images.unsplash.com/photo-1478358161113-b0e11994a36b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
-    },
-    {
-      'title': 'aaaaaaaa',
-      'price': '2',
-      'images':
-          'https://images.unsplash.com/photo-1478358161113-b0e11994a36b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
-    },
-    {
-      'title': 'aaaaaaaa',
-      'price': '2',
-      'images':
-          'https://images.unsplash.com/photo-1478358161113-b0e11994a36b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
-    },
-    {
-      'title': 'aaaaaaaa',
-      'price': '2',
-      'images':
-          'https://images.unsplash.com/photo-1478358161113-b0e11994a36b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
-    },
-    {
-      'title': 'aaaaaaaa',
-      'price': '2',
-      'images':
-          'https://images.unsplash.com/photo-1478358161113-b0e11994a36b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
-    },
-    {
-      'title': 'aaaaaaaa',
-      'price': '2',
-      'images':
-          'https://images.unsplash.com/photo-1478358161113-b0e11994a36b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
-    },
-    {
-      'title': 'aaaaaaaa',
-      'price': '2',
-      'images':
-          'https://images.unsplash.com/photo-1478358161113-b0e11994a36b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
-    },
-    {
-      'title': 'aaaaaaaa',
-      'price': '2',
-      'images':
-          'https://images.unsplash.com/photo-1478358161113-b0e11994a36b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
-    },
-    {
-      'title': 'aaaaaaaa',
-      'price': '2',
-      'images':
-          'https://images.unsplash.com/photo-1478358161113-b0e11994a36b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
-    },
-    {
-      'title': 'aaaaaaaa',
-      'price': '2',
-      'images':
-          'https://images.unsplash.com/photo-1478358161113-b0e11994a36b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
-    },
-    {
-      'title': 'aaaaaaaa',
-      'price': '2',
-      'images':
-          'https://images.unsplash.com/photo-1478358161113-b0e11994a36b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
-    },
-    {
-      'title': 'aaaaaaaa',
-      'price': '2',
-      'images':
-          'https://images.unsplash.com/photo-1478358161113-b0e11994a36b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
-    },
-    {
-      'title': 'aaaaaaaa',
-      'price': '2',
-      'images':
-          'https://images.unsplash.com/photo-1478358161113-b0e11994a36b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
-    },
-    {
-      'title': 'aaaaaaaa',
-      'price': '2',
-      'images':
-          'https://images.unsplash.com/photo-1478358161113-b0e11994a36b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
-    },
-    {
-      'title': 'aaaaaaaa',
-      'price': '2',
-      'images':
-          'https://images.unsplash.com/photo-1478358161113-b0e11994a36b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
-    },
-  ];
   @override
   Widget build(BuildContext context) {
+    final futureAttendedEvents =
+        clenaupEvents.where((element) => element.isAttended == true).toList();
+
     return GridView.builder(
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
@@ -112,11 +27,15 @@ class _GridState extends State<Grid> {
         mainAxisSpacing: 12,
         mainAxisExtent: 170,
       ),
-      itemCount: gridMap.length,
-      itemBuilder: (_, index) {
+      itemCount: futureAttendedEvents.length,
+      itemBuilder: (context, index) {
         return GestureDetector(
           onTap: () {
             showModalBottomSheet(
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.vertical(top: Radius.circular(40)),
+              ),
+              clipBehavior: Clip.antiAliasWithSaveLayer,
               context: context,
               builder: (context) => const ContainerInProfile(),
             );
@@ -126,10 +45,9 @@ class _GridState extends State<Grid> {
               borderRadius: BorderRadius.circular(12),
               color: Colors.amber,
             ),
-            child: Column(
-              children: [
-                Image.network("${gridMap.elementAt(index)['images']}"),
-              ],
+            child: Image.file(
+              File(futureAttendedEvents[index].eventImage.path),
+              fit: BoxFit.cover,
             ),
           ),
         );

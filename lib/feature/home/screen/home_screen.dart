@@ -1,6 +1,11 @@
+import 'dart:io';
+import 'dart:math';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:grey_to_green/feature/home/widgets/colors.dart';
+import 'package:grey_to_green/models/data/events.dart';
+import 'package:grey_to_green/models/event.dart';
 
 @RoutePage()
 class HomeScreen extends StatefulWidget {
@@ -13,6 +18,9 @@ class HomeScreen extends StatefulWidget {
 class _HomeState extends State<HomeScreen> {
   bool pastEvent = true;
   bool attend = false;
+
+  Event homeEvent = fakeEvents[0];
+  int temp = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -37,10 +45,11 @@ class _HomeState extends State<HomeScreen> {
                   child: Row(
                     children: <Widget>[
                       CircleAvatar(
-                        backgroundImage: AssetImage('assets/avatar.png'),
+                        backgroundImage:
+                            AssetImage('assets/images/applogo.png'),
                         radius: 20,
                         backgroundColor: Color(
-                          AppColors.primary,
+                          AppColors.grey,
                         ),
                       ),
                       Padding(
@@ -58,9 +67,13 @@ class _HomeState extends State<HomeScreen> {
                       ),
                       Spacer(),
                       CircleAvatar(
-                        backgroundImage: AssetImage('assets/avatar.png'),
+                        backgroundImage: NetworkImage(
+                          'https://media.licdn.com/dms/image/D4D03AQHk9VEJad9ODg/profile-displayphoto-shrink_400_400/0/1685731084517?e=1714003200&v=beta&t=fHTKR589TPgC-k82OawZ13rYxwMeEyP4FR8_VpTvg1E',
+                        ),
                         radius: 30,
-                        backgroundColor: Colors.blue,
+                        backgroundColor: Color(
+                          AppColors.primary,
+                        ),
                       ),
                     ],
                   ),
@@ -110,6 +123,7 @@ class _HomeState extends State<HomeScreen> {
                           onPressed: () {
                             setState(() {
                               pastEvent = true;
+                              homeEvent = fakeEvents[0];
                             });
                           },
                           child: const Text(
@@ -126,6 +140,7 @@ class _HomeState extends State<HomeScreen> {
                           onPressed: () {
                             setState(() {
                               pastEvent = false;
+                              homeEvent = clenaupEvents[0];
                             });
                           },
                           style: TextButton.styleFrom(
@@ -149,6 +164,13 @@ class _HomeState extends State<HomeScreen> {
                 ),
                 Container(
                   decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.9),
+                        spreadRadius: 2,
+                        blurRadius: 2,
+                      ),
+                    ],
                     color: const Color(
                       AppColors.grey,
                     ),
@@ -165,7 +187,9 @@ class _HomeState extends State<HomeScreen> {
                         Row(
                           children: [
                             const CircleAvatar(
-                              backgroundImage: AssetImage('assets/avatar.png'),
+                              backgroundImage: NetworkImage(
+                                'https://static-00.iconduck.com/assets.00/profile-default-icon-512x511-v4sw4m29.png',
+                              ),
                               radius: 30,
                               backgroundColor: Color(
                                 AppColors.primary,
@@ -179,7 +203,7 @@ class _HomeState extends State<HomeScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'FatihSultan Mehmet Kuru',
+                                      'User',
                                       style: TextStyle(
                                         fontSize: 20,
                                         color: Colors.black,
@@ -200,55 +224,79 @@ class _HomeState extends State<HomeScreen> {
                               ),
                             ),
                             const Spacer(),
-                            const Text(
-                              'Change',
-                              textAlign: TextAlign.right,
-                              style: TextStyle(
-                                fontSize: 17,
-                                color: Colors.red,
+                            InkWell(
+                              onTap: () {
+                                int random;
+                                if (pastEvent) {
+                                  do {
+                                    random =
+                                        Random().nextInt(fakeEvents.length);
+                                  } while (random == temp);
+                                  temp = random;
+                                  setState(() {
+                                    homeEvent = fakeEvents[random];
+                                  });
+                                } else {
+                                  do {
+                                    random =
+                                        Random().nextInt(fakeEvents.length);
+                                  } while (random == temp);
+                                  temp = random;
+                                  setState(() {
+                                    homeEvent = clenaupEvents[random];
+                                  });
+                                }
+                              },
+                              child: const Text(
+                                'Change',
+                                textAlign: TextAlign.right,
+                                style: TextStyle(
+                                  fontSize: 17,
+                                  color: Colors.red,
+                                ),
                               ),
                             ),
                           ],
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top: 15, bottom: 10),
-                          child: Image.network(
-                            'https://www.designi.com.br/images/preview/11291452.jpg',
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(12),
+                            child: Image.file(
+                              File(homeEvent.eventImage.path),
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                        ),
+                        Text(
+                          homeEvent.title,
+                          style: const TextStyle(
+                            fontSize: 30,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const Divider(
+                          color: Color(
+                            AppColors.primary,
                           ),
                         ),
                         Row(
                           children: [
+                            const Icon(
+                              Icons.location_on,
+                              color: Colors.black,
+                              size: 30,
+                            ),
                             SizedBox(
-                              width: screenWidthSize / 2.7,
-                              child: const Text(
-                                'Ipanema Beach',
-                                style: TextStyle(
+                              width: screenWidthSize / 1.5,
+                              child: Text(
+                                homeEvent.location.name,
+                                style: const TextStyle(
                                   fontSize: 20,
                                   color: Colors.black,
                                 ),
                               ),
-                            ),
-                            const Spacer(),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                const Icon(
-                                  Icons.location_on,
-                                  color: Colors.black,
-                                  size: 30,
-                                ),
-                                SizedBox(
-                                  width: screenWidthSize / 2.7,
-                                  child: const Text(
-                                    textAlign: TextAlign.right,
-                                    'Brazil ',
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                ),
-                              ],
                             ),
                           ],
                         ),
@@ -256,29 +304,32 @@ class _HomeState extends State<HomeScreen> {
                           padding: const EdgeInsets.symmetric(vertical: 3),
                           child: pastEvent
                               ? null
-                              : const Text(
-                                  'Apr 06,2024 - Apr 13 2024 | 08.00 PM - 10.00 PM',
-                                  style: TextStyle(
+                              : Text(
+                                  '${homeEvent.eventDate} | ${homeEvent.eventTime}',
+                                  style: const TextStyle(
                                     fontSize: 14,
                                     color: Colors.black,
                                   ),
                                 ),
                         ),
-                        Icon(
-                          pastEvent ? Icons.message : Icons.person_2_rounded,
-                          color: const Color(
-                            AppColors.primary,
+                        Container(
+                          width: screenWidthSize,
+                          decoration: BoxDecoration(
+                            color: Colors.white38,
+                            borderRadius: BorderRadius.circular(10),
                           ),
-                          size: 30,
-                        ),
-                        Text(
-                          pastEvent
-                              ? 'Çok güzel bir geziydi. Herkese teşekkür ederim. Öptüm.'
-                              : '1200 Voluneteers Required',
-                          textAlign: TextAlign.justify,
-                          style: const TextStyle(
-                            fontSize: 20,
-                            color: Colors.black,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8),
+                            child: Text(
+                              pastEvent
+                                  ? homeEvent.about
+                                  : '${homeEvent.maxParticipant} Voluneteers Required',
+                              textAlign: TextAlign.justify,
+                              style: const TextStyle(
+                                fontSize: 20,
+                                color: Colors.black,
+                              ),
+                            ),
                           ),
                         ),
                         if (pastEvent)

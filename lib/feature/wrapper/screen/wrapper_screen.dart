@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:grey_to_green/feature/home/widgets/colors.dart';
 import 'package:grey_to_green/feature/wrapper/mixin/wrapper_screen_mixin.dart';
 import 'package:grey_to_green/product/navigation/app_router.dart';
 
@@ -23,7 +24,9 @@ class WrapperScreen extends StatelessWidget with WrapperScreenMixin {
           body: child,
           bottomNavigationBar: BottomNavigationBar(
             backgroundColor: Colors.red,
-            fixedColor: Colors.red,
+            fixedColor: const Color(
+              AppColors.primary,
+            ),
             unselectedIconTheme: const IconThemeData(color: Colors.black),
             items: const [
               BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),

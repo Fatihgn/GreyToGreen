@@ -33,18 +33,6 @@ class _PlanEventScreenState extends State<PlanEventScreen> {
   String category = categories[0];
 
   var start;
-
-  @override
-  void dispose() {
-    titleController.dispose();
-    aboutController.dispose();
-    locationController.dispose();
-    dateController.dispose();
-    timeController.dispose();
-    participantController.dispose();
-    super.dispose();
-  }
-
   Future<void> planEvent() async {
     final maxParticipant = double.tryParse(participantController.text);
 
@@ -92,7 +80,72 @@ class _PlanEventScreenState extends State<PlanEventScreen> {
           category: category,
         ),
       );
-      print(_selectedEventImage!.path);
+
+      titleController.clear();
+      locationController.clear();
+      dateController.clear();
+      timeController.clear();
+      aboutController.clear();
+      participantController.clear();
+      _selectedEventImage = null;
+    });
+  }
+
+  Future<void> planFakeEvent() async {
+    final maxParticipant = double.tryParse(participantController.text);
+
+    if (titleController.text.trim().isEmpty ||
+        aboutController.text.trim().isEmpty ||
+        locationController.text.trim().isEmpty ||
+        dateController.text.isEmpty ||
+        timeController.text.trim().isEmpty ||
+        maxParticipant! <= 0 ||
+        participantController.text.isEmpty ||
+        _selectedEventImage == null) {
+      await showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Missing Information'),
+          content: const Text('Please fill in all blank fields !'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('Okey'),
+            ),
+          ],
+        ),
+      );
+      return;
+    }
+    start = await locationFromAddress(locationController.text);
+
+    setState(() {
+      fakeEvents.add(
+        Event(
+          title: titleController.text,
+          location: MyLocation(
+            name: locationController.text,
+            latitude: double.tryParse(start[0].latitude.toString())!,
+            longitude: double.tryParse(start[0].longitude.toString())!,
+          ),
+          eventDate: dateController.text,
+          eventTime: timeController.text,
+          about: aboutController.text,
+          eventImage: _selectedEventImage!,
+          maxParticipant: int.parse(participantController.text),
+          category: category,
+        ),
+      );
+
+      titleController.clear();
+      locationController.clear();
+      dateController.clear();
+      timeController.clear();
+      aboutController.clear();
+      participantController.clear();
+      _selectedEventImage = null;
     });
   }
 
